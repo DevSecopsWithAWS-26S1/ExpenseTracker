@@ -6,7 +6,7 @@ This project uses a three-tier setup to record and display expenses. The browser
 
 ## Architecture
 
-Nginx serves the frontend and forwards API requests to the Node.js and Express backend. The backend reads and writes expense records in MySQL.
+Nginx serves the frontend and forwards API requests to the Node.js backend. The backend reads and writes expense records in MySQL.
 
 ## Project files
 
