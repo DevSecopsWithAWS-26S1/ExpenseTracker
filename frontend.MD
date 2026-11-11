@@ -65,29 +65,7 @@ systemctl restart nginx
 ```
 
 
-### Configure SELinux to Allow Nginx Network Connections
-
-Run the following commands on the Frontend EC2 server to verify and configure SELinux permissions for Nginx.
-
-1\. Check SELinux status
-
-```
-getenforce
-```
-
-Purpose: Checks whether SELinux is enabled and enforcing security policies on the server.
-
-- `Enforcing` – SELinux security policies are actively applied.
-- `Permissive` – Policies are monitored but not enforced.
-- `Disabled` – SELinux is disabled.
-
-2\. Check Nginx network connection permission
-
-```
-getsebool httpd_can_network_connect
-```
-
-Purpose: Checks whether SELinux allows Nginx (running under the web server security policy) to connect to backend servers over the network.
+over the network.
 
 - `off` – Network connections are blocked by this SELinux policy.
 - `on` – Network connections are allowed by this SELinux policy.
