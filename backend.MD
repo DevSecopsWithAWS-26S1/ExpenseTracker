@@ -38,6 +38,7 @@ Download and unpack the backend archive:
 ```sh
 curl -L -o /tmp/backend.zip https://github.com/DevSecopsWithAWS-26S1/Expenseproject/raw/refs/heads/main/expense-backend-v2.zip
 cd /app
+dnf install unzip -y 
 unzip /tmp/backend.zip
 ```
 
@@ -83,19 +84,30 @@ systemctl start backend
 systemctl enable backend
 ```
 
-## Load the database schema
-
-Install a MySQL client on the backend host:
-
-```sh
-dnf install mysql -y
-```
-
+```NOTE``` : Load schema step should run in the ```database server``` 
 Load the schema into the database server. Use the matching database root password:
 
 ```sh
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql  -uroot -pExpenseApp@1 
 ```
+
+* Run the below statements copied fro,  the /app/schema/backend.sql in backend server 
+```
+CREATE DATABASE IF NOT EXISTS transactions;
+USE transactions;
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    amount INT,
+    description VARCHAR(255)
+);
+
+CREATE USER IF NOT EXISTS 'expense'@'%' IDENTIFIED BY 'ExpenseApp@1';
+GRANT ALL ON transactions.* TO 'expense'@'%';
+FLUSH PRIVILEGES;
+
+```
+
 
 The schema grants the application account only the `SELECT`, `INSERT`, and `DELETE` permissions used by the API.
 
@@ -104,13 +116,3 @@ Restart the service after the schema is in place:
 ```sh
 systemctl restart backend
 ```
-
-## Delete one expense
-
-The API can remove a single expense by its database ID. Send a `DELETE` request to `/transaction/<id>`, for example:
-
-```sh
-curl -X DELETE http://<BACKEND-SERVER-IPADDRESS>:8080/transaction/12
-```
-
-The API returns a not-found response if that ID does not exist. To delete every expense instead, send a `DELETE` request to `/transaction` with no ID.
