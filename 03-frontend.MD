@@ -12,6 +12,10 @@ systemctl enable nginx
 systemctl start nginx
 ```
 
+The web tier listens on HTTP port `80` by default. Allow inbound TCP port `80` from the intended client networks in the host firewall and, when applicable, the cloud security group. Do not expose the backend port `8080` or MySQL port `3306` publicly; allow those ports only from the tier that needs to connect.
+
+This guide configures HTTP only. It does not configure HTTPS, a TLS certificate, or port `443`; add TLS before using the site for production traffic over untrusted networks.
+
 Open the site once in a browser to confirm that Nginx is responding with its default page.
 
 Remove the default page files before copying the application:
@@ -58,35 +62,33 @@ location /health {
 }
 ```
 
-Restart Nginx to apply the configuration:
+Validate the configuration, then reload Nginx to apply it:
 
 ```sh
-systemctl restart nginx
+nginx -t
+systemctl reload nginx
 ```
 
+If `nginx -t` reports an error, fix the configuration before reloading.
 
-over the network.
+## Allow Nginx to connect to the backend with SELinux
 
-- `off` – Network connections are blocked by this SELinux policy.
-- `on` – Network connections are allowed by this SELinux policy.
+SELinux may block Nginx from making outbound connections to the API. Check the current setting:
 
-3\. Enable network connections for Nginx
-
+```sh
+getsebool httpd_can_network_connect
 ```
+
+If it is off, enable the permission persistently:
+
+```sh
 sudo setsebool -P httpd_can_network_connect 1
 ```
 
-Purpose: Enables the SELinux permission that allows Nginx to establish outbound network connections to backend services.
+`-P` persists the setting across reboots; `1` enables it. Verify the result:
 
-- `-P` – Makes the setting permanent, including after server reboots.
-- `1` – Enables the permission.
-
-Expected result:
-
-```
+```text
 httpd_can_network_connect --> on
 ```
 
-Why is this required?
-
-Nginx acts as a reverse proxy and forwards API requests from the frontend server to the backend Node.js application running on port `8080`. SELinux may block these connections by default. Enabling this permission allows Nginx to communicate with the backend without disabling SELinux.
+This allows Nginx to proxy requests to the Node.js backend on port `8080` without disabling SELinux.

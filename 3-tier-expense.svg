@@ -1,51 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 400" role="img" aria-labelledby="title description">
-  <title id="title">Expense Tracker request flow</title>
-  <desc id="description">A browser requests the web app from Nginx. Nginx serves the frontend and forwards API requests to the Node.js and Express service, which reads and writes expense data in MySQL.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 850" role="img" aria-labelledby="title description">
+  <title id="title">Expense Tracker three-tier deployment architecture</title>
+  <desc id="description">A browser loads a React JavaScript frontend from Nginx over HTTP port 80. Nginx serves static files and proxies API requests over HTTP port 8080 to a Node.js and Express JavaScript service. The service reads and writes the transactions database on MySQL port 3306.</desc>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
       <path d="M0 0 10 5 0 10Z" fill="#62748a"/>
     </marker>
     <style>
       text { font-family: "Segoe UI", Arial, sans-serif; fill: #172b4d; }
-      .label { font-size: 15px; font-weight: 700; }
-      .detail { font-size: 13px; fill: #52657d; }
+      .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 1.4px; fill: #52657d; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #52657d; }
+      .tier { font-size: 13px; font-weight: 700; letter-spacing: 1.2px; fill: #52657d; }
+      .card-title { font-size: 22px; font-weight: 700; }
+      .body { font-size: 15px; fill: #344966; }
+      .small { font-size: 13px; fill: #52657d; }
+      .tag { font-size: 13px; font-weight: 700; }
       .flow { stroke: #62748a; stroke-width: 2.5; marker-end: url(#arrow); }
+      .flow-label { font-size: 13px; font-weight: 700; fill: #344966; }
     </style>
   </defs>
-  <rect width="1120" height="400" rx="24" fill="#f4f7fb"/>
-  <text x="56" y="62" font-size="25" font-weight="700">A request moves through four simple stops</text>
-  <text x="56" y="91" font-size="15" fill="#52657d">The web tier serves the page and passes API traffic to the data tier.</text>
+  <rect width="1480" height="850" rx="26" fill="#f3f6fa"/>
+  <rect x="0" y="0" width="1480" height="155" rx="26" fill="#102a43"/>
+  <path d="M0 130h1480v25H0z" fill="#102a43"/>
+  <text class="eyebrow" x="56" y="48" fill="#a9c8e8">EXPENSE TRACKER · APPLICATION ARCHITECTURE</text>
+  <text class="title" x="56" y="91" fill="#ffffff">Three-tier request and data flow</text>
+  <text class="subtitle" x="56" y="122" fill="#d2dfec">Deployment and runtime details documented in the project guides and packaged application.</text>
 
-  <rect x="55" y="145" width="205" height="150" rx="18" fill="#ffffff" stroke="#c8d4e2" stroke-width="2"/>
-  <circle cx="157" cy="190" r="22" fill="#e2efff"/>
-  <path d="M145 190h24M157 178v24" stroke="#3478c8" stroke-width="3" stroke-linecap="round"/>
-  <text class="label" x="157" y="238" text-anchor="middle">Browser</text>
-  <text class="detail" x="157" y="262" text-anchor="middle">Expense web page</text>
+  <text class="tier" x="52" y="204">CLIENT</text>
+  <text class="tier" x="345" y="204">01 · WEB TIER</text>
+  <text class="tier" x="718" y="204">02 · APPLICATION TIER</text>
+  <text class="tier" x="1091" y="204">03 · DATA TIER</text>
 
-  <path class="flow" d="M270 220h48"/>
-  <text class="detail" x="294" y="204" text-anchor="middle">HTTP</text>
+  <rect x="42" y="222" width="250" height="365" rx="18" fill="#ffffff" stroke="#c8d4e2" stroke-width="2"/>
+  <rect x="42" y="222" width="250" height="9" rx="5" fill="#718096"/>
+  <circle cx="167" cy="292" r="31" fill="#edf2f7"/>
+  <path d="M151 279h32v24h-32zM158 310h18M167 303v7" fill="none" stroke="#53677e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="card-title" x="167" y="356" text-anchor="middle">Web browser</text>
+  <text class="body" x="167" y="387" text-anchor="middle">User interface</text>
+  <line x1="72" y1="414" x2="262" y2="414" stroke="#e1e8f0"/>
+  <text class="small" x="72" y="444">Runs the delivered React app</text>
+  <text class="small" x="72" y="468">JavaScript in the browser</text>
+  <text class="small" x="72" y="511">Loads HTML, CSS and JS;</text>
+  <text class="small" x="72" y="535">sends expense API requests</text>
+  <text class="small" x="72" y="559">to the same site origin.</text>
 
-  <rect x="330" y="145" width="205" height="150" rx="18" fill="#e8f4ff" stroke="#91bce4" stroke-width="2"/>
-  <circle cx="432" cy="190" r="22" fill="#cfe7ff"/>
-  <path d="M420 181h24v18h-24zM424 176h16" fill="none" stroke="#3478c8" stroke-width="3" stroke-linejoin="round"/>
-  <text class="label" x="432" y="238" text-anchor="middle">Nginx</text>
-  <text class="detail" x="432" y="262" text-anchor="middle">Static files + API proxy</text>
+  <rect x="328" y="222" width="335" height="365" rx="18" fill="#eaf4ff" stroke="#91bce4" stroke-width="2"/>
+  <rect x="328" y="222" width="335" height="9" rx="5" fill="#3478c8"/>
+  <rect x="353" y="250" width="111" height="28" rx="14" fill="#d5eaff"/>
+  <text class="tag" x="408" y="269" text-anchor="middle" fill="#245b97">TCP :80</text>
+  <text class="card-title" x="495" y="316" text-anchor="middle">Nginx</text>
+  <text class="body" x="495" y="345" text-anchor="middle">Static web server + reverse proxy</text>
+  <line x1="358" y1="368" x2="633" y2="368" stroke="#c9dff5"/>
+  <text class="small" x="358" y="399">Host: Linux · configured with systemd</text>
+  <text class="small" x="358" y="427">Frontend files: /usr/share/nginx/html</text>
+  <text class="small" x="358" y="455">Frontend: React build · JavaScript,</text>
+  <text class="small" x="358" y="477">HTML and CSS</text>
+  <text class="small" x="358" y="516">Serves the page and proxies /api/*</text>
+  <text class="small" x="358" y="540">to the backend; the configured proxy</text>
+  <text class="small" x="358" y="564">strips the /api/ prefix.</text>
 
-  <path class="flow" d="M545 220h48"/>
-  <text class="detail" x="569" y="204" text-anchor="middle">/api</text>
+  <rect x="701" y="222" width="335" height="365" rx="18" fill="#eaf7ef" stroke="#9bc9aa" stroke-width="2"/>
+  <rect x="701" y="222" width="335" height="9" rx="5" fill="#368353"/>
+  <rect x="726" y="250" width="111" height="28" rx="14" fill="#d5efdd"/>
+  <text class="tag" x="781" y="269" text-anchor="middle" fill="#28633d">TCP :8080</text>
+  <text class="card-title" x="868" y="316" text-anchor="middle">Expense API</text>
+  <text class="body" x="868" y="345" text-anchor="middle">Node.js 20+ · Express</text>
+  <line x1="731" y1="368" x2="1006" y2="368" stroke="#cee5d4"/>
+  <text class="small" x="731" y="399">Language: JavaScript (CommonJS)</text>
+  <text class="small" x="731" y="427">Routes: GET /transaction</text>
+  <text class="small" x="731" y="451">POST /transaction</text>
+  <text class="small" x="731" y="475">DELETE /transaction and /transaction/:id</text>
+  <text class="small" x="731" y="516">Uses DB_HOST, DB_USER, DB_PWD and</text>
+  <text class="small" x="731" y="540">DB_DATABASE to connect to MySQL;</text>
+  <text class="small" x="731" y="564">default database: transactions.</text>
 
-  <rect x="605" y="145" width="220" height="150" rx="18" fill="#eaf7ef" stroke="#9bc9aa" stroke-width="2"/>
-  <circle cx="715" cy="190" r="22" fill="#d3efdc"/>
-  <path d="M703 181h24v18h-24zM709 176h12M709 187h12M709 193h8" fill="none" stroke="#368353" stroke-width="2.5" stroke-linejoin="round"/>
-  <text class="label" x="715" y="238" text-anchor="middle">Node.js + Express</text>
-  <text class="detail" x="715" y="262" text-anchor="middle">Expense API on port 8080</text>
+  <rect x="1074" y="222" width="364" height="365" rx="18" fill="#fff5e6" stroke="#e5c38b" stroke-width="2"/>
+  <rect x="1074" y="222" width="364" height="9" rx="5" fill="#ba8431"/>
+  <rect x="1099" y="250" width="111" height="28" rx="14" fill="#ffebc8"/>
+  <text class="tag" x="1154" y="269" text-anchor="middle" fill="#855d20">TCP :3306</text>
+  <text class="card-title" x="1256" y="316" text-anchor="middle">MySQL</text>
+  <text class="body" x="1256" y="345" text-anchor="middle">Transactions data store</text>
+  <line x1="1104" y1="368" x2="1408" y2="368" stroke="#f0dfc2"/>
+  <text class="small" x="1104" y="399">MySQL Server 8.0.x (setup guide)</text>
+  <text class="small" x="1104" y="427">Database / table: transactions</text>
+  <text class="small" x="1104" y="455">Columns: id, amount, description</text>
+  <text class="small" x="1104" y="499">Schema language: SQL</text>
+  <text class="small" x="1104" y="527">App account grants: SELECT, INSERT,</text>
+  <text class="small" x="1104" y="551">DELETE on transactions.*</text>
 
-  <path class="flow" d="M835 220h48"/>
-  <text class="detail" x="859" y="204" text-anchor="middle">SQL</text>
+  <path class="flow" d="M292 404h31"/>
+  <text class="flow-label" x="307" y="386" text-anchor="middle">HTTP</text>
+  <path class="flow" d="M663 404h31"/>
+  <text class="flow-label" x="678" y="386" text-anchor="middle">HTTP</text>
+  <path class="flow" d="M1036 404h31"/>
+  <text class="flow-label" x="1051" y="386" text-anchor="middle">SQL</text>
 
-  <rect x="895" y="145" width="170" height="150" rx="18" fill="#fff3df" stroke="#e5c38b" stroke-width="2"/>
-  <ellipse cx="980" cy="180" rx="25" ry="9" fill="#ffe4b2" stroke="#ba8431" stroke-width="2"/>
-  <path d="M955 180v24c0 5 11 9 25 9s25-4 25-9v-24M955 192c0 5 11 9 25 9s25-4 25-9" fill="none" stroke="#ba8431" stroke-width="2"/>
-  <text class="label" x="980" y="238" text-anchor="middle">MySQL</text>
-  <text class="detail" x="980" y="262" text-anchor="middle">Expense records</text>
+  <rect x="42" y="626" width="1396" height="169" rx="18" fill="#ffffff" stroke="#d7e0ea" stroke-width="2"/>
+  <text class="tier" x="72" y="665">REQUEST FLOW</text>
+  <text class="body" x="72" y="699"><tspan font-weight="700">1.</tspan> Browser loads the React page from Nginx over HTTP port 80.</text>
+  <text class="body" x="72" y="730"><tspan font-weight="700">2.</tspan> Expense actions call /api/transaction; Nginx forwards them to the API on port 8080.</text>
+  <text class="body" x="72" y="761"><tspan font-weight="700">3.</tspan> The API queries MySQL on port 3306 and returns JSON through Nginx to the browser.</text>
+  <text class="small" x="825" y="665">Deployment notes</text>
+  <text class="small" x="825" y="699">Ports 80 and 8080 follow the setup and</text>
+  <text class="small" x="825" y="722">application configuration; 3306 is MySQL's</text>
+  <text class="small" x="825" y="745">default. HTTPS, load balancing, and HA are</text>
+  <text class="small" x="825" y="768">not configured in the files provided.</text>
 </svg>
