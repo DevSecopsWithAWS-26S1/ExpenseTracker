@@ -1,6 +1,6 @@
 # Expense Tracker
 
-Expense Tracker is a small three-tier web application for recording, listing, and deleting expense transactions. A browser loads the web interface from Nginx, Nginx forwards API requests to a Node.js service, and that service stores data in MySQL.
+Expense Tracker is a  three-tier web application for recording, listing, and deleting expense transactions. A browser loads the web interface from Nginx, Nginx forwards API requests to a Node.js service, and that service stores data in MySQL.
 
 ![Expense Tracker three-tier deployment architecture](3-tier-expense.svg)
 
