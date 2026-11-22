@@ -68,27 +68,3 @@ Validate the configuration, then reload Nginx to apply it:
 nginx -t
 systemctl reload nginx
 ```
-
-If `nginx -t` reports an error, fix the configuration before reloading.
-
-## Allow Nginx to connect to the backend with SELinux
-
-SELinux may block Nginx from making outbound connections to the API. Check the current setting:
-
-```sh
-getsebool httpd_can_network_connect
-```
-
-If it is off, enable the permission persistently:
-
-```sh
-sudo setsebool -P httpd_can_network_connect 1
-```
-
-`-P` persists the setting across reboots; `1` enables it. Verify the result:
-
-```text
-httpd_can_network_connect --> on
-```
-
-This allows Nginx to proxy requests to the Node.js backend on port `8080` without disabling SELinux.
