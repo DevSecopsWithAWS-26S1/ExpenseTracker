@@ -36,7 +36,7 @@ mkdir /app
 Download and unpack the backend archive:
 
 ```sh
-curl -fL -o /tmp/backend.zip https://github.com/DevSecopsWithAWS-26S1/ExpenseTracker/blob/main/expense-backend-v2.zip?raw=true
+curl -fL -o /tmp/frontend.zip https://github.com/DevSecopsWithAWS-26S1/ExpenseTracker/blob/main/expense-frontend-v2.zip?raw=true
 cd /app
 dnf install unzip -y 
 unzip /tmp/backend.zip
