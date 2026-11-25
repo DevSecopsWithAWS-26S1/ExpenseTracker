@@ -29,7 +29,7 @@ rm -rf /usr/share/nginx/html/*
 Download the frontend archive and unpack it into Nginx's document directory:
 
 ```sh
-curl -L -o /tmp/frontend.zip https://github.com/DevSecopsWithAWS-26S1/Expenseproject/raw/refs/heads/main/expense-frontend-v2.zip
+curl -fL -o /tmp/frontend.zip https://github.com/DevSecopsWithAWS-26S1/Expenseproject/raw/blob/main/expense-frontend-v2.zip?raw=true
 cd /usr/share/nginx/html
 dnf install unzip -y
 unzip /tmp/frontend.zip
